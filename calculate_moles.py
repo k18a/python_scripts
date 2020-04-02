@@ -62,3 +62,13 @@ def calculate_moles(pressure, volume, temperature, gas, eos):
             n_new = volume / Vm
         moles = n_new
     return moles
+
+def get_z(pressure, temperature, gas):
+    import CoolProp.CoolProp as CP
+    z = CP.PropsSI('Z','P',pressure,'T',temperature,gas)
+    return z
+
+def get_rhom(pressure, temperature, gas):
+    import CoolProp.CoolProp as CP
+    rhom = CP.PropsSI('DMOLAR','P',pressure,'T',temperature,gas)
+    return rhom
