@@ -1,3 +1,6 @@
+"""
+this is a list of functions that can be called from excel
+"""
 import xlwings as xw
 import numpy as np
 from convert_units import convert_pressure
@@ -115,9 +118,10 @@ def langmuir_fit(P, n):
 
     return np.array([VL, PL, rss])
 
-def carlslaw_analytical_solution(t,rho_c0,rho_i,Kc,Ra,n):
+@xw.func
+def carlslaw_analytical_solution(t,rho_c0,rho_i,Kc,K,Ra,n):
 
-    rho = cj_analytical_edge_concentration(t,rho_c0,rho_i,Kc,Ra,n)
+    rho = cj_analytical_edge_concentration(t,rho_c0,rho_i,Kc,K,Ra,n)
 
     return rho
 

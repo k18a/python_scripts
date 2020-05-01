@@ -48,7 +48,7 @@ def _get_analytical_roots(Kc,n):
     y1 = 0
     a0 = 0
     roots = []
-    alpha_set = np.linspace(0,10*np.pi,5000)
+    alpha_set = np.linspace(0,100*np.pi,50000)
     for a1 in alpha_set:
         y1 = 3*np.sin(a1) + Kc*(a1**2)*np.sin(a1) - 3*a1*np.cos(a1)
         if abs(y0+y1) != (abs(y0)+abs(y1)):
@@ -60,7 +60,7 @@ def _get_analytical_roots(Kc,n):
         y0 = y1
     return roots
 
-def cj_analytical_edge_concentration(t,rho_c0,rho_i,Kc,Ra,n):
+def cj_analytical_edge_concentration(t,rho_c0,rho_i,Kc,K,Ra,n):
     """get analytical solution for gas concentration based ...
     on radial diffusion function (Carlslaw Jaeger)
     
@@ -69,6 +69,7 @@ def cj_analytical_edge_concentration(t,rho_c0,rho_i,Kc,Ra,n):
         rho_c0 {float} -- initial concentration at edge mol/m^3
         rho_i {float} --  initial concentration at centre mol/m^3
         Kc {float} -- gas storage capacity 
+        K {float} -- gas diffusion coefficient
         Ra {float} -- particle radius
         n {int} -- number of roots
     
@@ -79,6 +80,6 @@ def cj_analytical_edge_concentration(t,rho_c0,rho_i,Kc,Ra,n):
     sum_roots = 0
     roots = _get_analytical_roots(Kc,n)
     for alpha in roots:
-        sum_roots += np.exp(-(Kc*(alpha**2)*t)/((Ra)**2))/(((Kc**2)*(alpha**2))+9*(Kc+1))
+        sum_roots += np.exp(-(K*(alpha**2)*t)/((Ra)**2))/(((Kc**2)*(alpha**2))+9*(Kc+1))
     rho =rho_c0-(rho_c0-rho_i)/(Kc+1)+(6*Kc)*(rho_c0-rho_i)*sum_roots
     return rho
